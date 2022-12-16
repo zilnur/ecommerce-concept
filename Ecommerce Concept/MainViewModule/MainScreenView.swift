@@ -124,40 +124,52 @@ struct MainScreenView: View {
                             AsyncImage(url: URL(string: model.picture)) { image in
                                 image
                                     .resizable()
-                                    .frame(width: MainScreenViewModel.screenWidth - 36)
-                                    .cornerRadius(10)
+                                    .aspectRatio(contentMode: .fill)
+                                    .padding(.leading, 100)
+                                    .frame(width: UIScreen.main.bounds.width - 36)
                             } placeholder: {}
-                            VStack(alignment: .leading) {
-                                if model.isNew ?? false {
-                                    Text("New")
+                            Rectangle()
+                                .foregroundColor(.clear)
+                                .background(
+                                    LinearGradient(gradient: Gradient(colors: [.black, .black, .black, .clear, .clear]), startPoint: .leading, endPoint: .trailing)
+                                )
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Spacer()
+                                    if model.isNew ?? false {
+                                        Text("New")
+                                            .foregroundColor(.white)
+                                            .font(.system(size: 18))
+                                            .padding(10)
+                                            .background(Color("orange"))
+                                            .mask(Circle())
+                                    }
+                                    Text(model.title )
+                                        .font(.system(size: 30))
                                         .foregroundColor(.white)
-                                        .font(.system(size: 18))
-                                        .padding(10)
-                                        .background(Color("orange"))
-                                        .mask(Circle())
-                                        .padding(.leading, -5)
+                                    Text(model.subtitle )
+                                        .foregroundColor(.white)
+                                        .font(.system(size: 11))
+                                    Button {
+                                        
+                                    } label: {
+                                        Text("Buy now!")
+                                            .foregroundColor(.black)
+                                            .padding(EdgeInsets(top: 5,
+                                                                leading: 27,
+                                                                bottom: 5,
+                                                                trailing: 27))
+                                            .background(.white)
+                                            .cornerRadius(5)
+                                    }
+                                    .padding(.bottom)
                                 }
-                                Text(model.title )
-                                    .font(.system(size: 30))
-                                    .foregroundColor(model.id == 2 ? .clear : .white)
-                                Text(model.subtitle )
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 11))
-                                Button {
-                                    
-                                } label: {
-                                    Text("Buy now!")
-                                        .foregroundColor(.black)
-                                        .padding(EdgeInsets(top: 5,
-                                                            leading: 27,
-                                                            bottom: 5,
-                                                            trailing: 27))
-                                        .background(.white)
-                                        .cornerRadius(5)
-                                }
+                                .frame(width: 200)
+                                Spacer()
                             }
-                            .padding(.trailing, 200)
                         }
+                        .frame(width: UIScreen.main.bounds.width - 36)
+                        .cornerRadius(10)
                     }
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
